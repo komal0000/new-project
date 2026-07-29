@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -23,18 +22,25 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Credential Mismatch');
         }
     }
+
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('front.login');
     }
 
-    public function adminLogout() {
+    public function adminLogout()
+    {
         Auth::logout();
+
         return redirect()->route('admin.login');
     }
-    public function clientLogout(){
+
+    public function clientLogout()
+    {
         Auth::logout();
+
         return redirect()->route('front.login');
     }
 
@@ -45,23 +51,23 @@ class LoginController extends Controller
         $lockOutTime = config('app.lockout');
         $tries = config('app.tries');
 
-        if ($request->getMethod() == "GET") {
+        if ($request->getMethod() == 'GET') {
             $loginInfo = ['p' => mt_rand('111111', '999999'), 'u' => mt_rand('111111', '999999')];
             Session::put('logininfo', $loginInfo);
             Session::save();
+
             return view('admin.login', compact('loginInfo'));
         } else {
 
             $data = [
-                "email" => $request->input($loginInfo['u']),
-                "password" => $request->input($loginInfo['p']),
+                'email' => $request->input($loginInfo['u']),
+                'password' => $request->input($loginInfo['p']),
             ];
 
             $rules = [
                 'email' => ['required', 'email'],
-                'password' => ['required']
+                'password' => ['required'],
             ];
-
 
             // Custom validation error messages
             $messages = [
@@ -70,15 +76,12 @@ class LoginController extends Controller
                 'password.required' => 'The password field is required.',
             ];
 
-
             $validator = Validator::make($data, $rules, $messages);
             try {
                 $validator->validate();
             } catch (\Throwable $th) {
                 dd($validator->errors());
             }
-
-
 
             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'role' => 0])) {
                 return redirect()->route('admin.index')->with('success', 'Login Success');

@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\ArticalType;
-use App\Models\Book;
-use App\Models\BookArtical;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -11,7 +8,7 @@ define('t_books', 'books');
 function vasset($file)
 {
     // return route('admin.file',['filename'=>urlencode($file)]);
-    return asset($file) . "?v=" . config('app.version');
+    return asset($file).'?v='.config('app.version');
 }
 
 function isGet()
@@ -55,14 +52,13 @@ function submissionStatusColors()
     ];
 }
 
-
 function getGeneralLayout()
 {
-    return (Cache::rememberForever('generallayouts', function () {
+    return Cache::rememberForever('generallayouts', function () {
         return DB::table('generallayouts')->first();
-    }) ?? ((object)[
-        'copy_right_name' => '', 'short_desc' => '', 'long_Desc' => '', 'logo' => '', 'content' => ''
-    ]));
+    }) ?? ((object) [
+        'copy_right_name' => '', 'short_desc' => '', 'long_Desc' => '', 'logo' => '', 'content' => '',
+    ]);
 }
 
 function getArticleDetail($article_id)

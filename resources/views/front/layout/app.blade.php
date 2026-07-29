@@ -9,10 +9,10 @@
         $general = getGeneralLayout();
     @endphp
     <title>{{ config('app.name') }} @yield('title')</title>
-    <link rel="icon" type="image/x-icon" href="{{asset($general->fav)}}">
+    <link rel="icon" type="image/x-icon" href="{{ asset($general->fav) }}">
     @yield('meta')
     @if (!View::hasSection('meta'))
-            @include('front.cache.meta')
+        @includeIf('front.cache.meta')
     @endif
     <link rel="stylesheet" href="{{ asset('asset/front/css/index.css') }}?v=1">
 
@@ -59,20 +59,17 @@
                     <img src="{{ vasset($general->logo) }}" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item" id="item">
-                            <a class="nav-link" href="{{ route('index') }}"
-                                id="item_a">HOME</a>
+                            <a class="nav-link" href="{{ route('index') }}" id="item_a">HOME</a>
                         </li>
                         <li class="nav-item" id="item">
-                            <a class="nav-link" href="{{ route('about') }}"
-                                id="item_a">ABOUT
+                            <a class="nav-link" href="{{ route('about') }}" id="item_a">ABOUT
                                 US</a>
                         </li>
                         {{-- <li class="nav-item" id="item">
@@ -81,21 +78,18 @@
                                 POLICY</a>
                         </li> --}}
                         <li class="nav-item" id="item">
-                            <a class="nav-link" href="{{ route('contact') }}"
-                                id="item_a">CONTACT</a>
+                            <a class="nav-link" href="{{ route('submission') }}" id="item_a">SUBMISSION
+                                GUIDELINES</a>
                         </li>
                         <li class="nav-item" id="item">
-                            <a class="nav-link" href="{{ route('submission') }}"
-                                id="item_a">INSTRUCTION & GUIDELINES</a>
-                        </li>
-                        <li class="nav-item" id="item">
-                            <a class="nav-link"
-                                href="{{ route('team')}}"> EDITORIAL TEAM</a>
+                            <a class="nav-link" href="{{ route('team') }}"> EDITORIAL TEAM</a>
                         </li>
 
                         <li class="nav-item" id="item">
-                            <a class="nav-link" href="{{ route('archive') }}"
-                                id="item_a">ARCHIVE</a>
+                            <a class="nav-link" href="{{ route('archive') }}" id="item_a">ARCHIVE</a>
+                        </li>
+                        <li class="nav-item" id="item">
+                            <a class="nav-link" href="{{ route('contact') }}" id="item_a">CONTACT US</a>
                         </li>
                         @includeIf('front.cache.more')
                     </ul>
@@ -135,18 +129,16 @@
         <div class="main-container" style="border-top:1px solid #DDDDDD ;border-bottom:1px solid #DDDDDD;">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-10" style="padding: 30px 20px">
+                    <div class="col-md-12" style="padding: 30px 20px">
                         @yield('content')
                     </div>
-                    <div class="col-md-2 p-0" style="border-left:1px solid #DDDDDD ;">
-                        <div class="sidebar">
-                            {{-- <div class="heading">
-                                <a href="#">Make a Submission</a>
-                            </div> --}}
-                            @includeif('front.cache.sidebar')
-                        </div>
-                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="associates-section py-3"
+            style="background-color: #9ee5d9; border-top: 1px solid #cce8e3; border-bottom: 1px solid #cce8e3;">
+            <div class="container">
+                @includeif('front.cache.sidebar')
             </div>
         </div>
         <footer>
@@ -163,7 +155,7 @@
                                 <div class="description mt-1">
                                     <p>
                                         {{ $general->short_desc }}
-                                        <a href="{{route('about')}}">ReadMore</a>
+                                        <a href="{{ route('about') }}">ReadMore</a>
                                     </p>
                                 </div>
                                 {{-- <div class="social-icons">
@@ -227,7 +219,7 @@
                     </div>
                 </div>
                 <div class="copyright">
-                    <p class="sj-copyrights">©{{ date("Y")}}, <a href="#">
+                    <p class="sj-copyrights">©{{ date('Y') }}, <a href="#">
                             {{ $general->copy_right_name }}</a>. All Rights Reserved</p>
                 </div>
 

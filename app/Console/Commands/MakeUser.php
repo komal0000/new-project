@@ -29,13 +29,14 @@ class MakeUser extends Command
         $email = $this->argument('email');
         $name = $this->argument('name');
         $password = $this->argument('password');
-        $user=new User();
-        $user->name=$name;
-        $user->email=$email;
-        $user->password=bcrypt($password);
-        $user->role=0;
+        $user = new User();
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = bcrypt($password);
+        $user->role = 0;
         $user->save();
-        echo "user created";
+        echo 'user created';
+
         return 1;
     }
 }

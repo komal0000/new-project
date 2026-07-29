@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('book_artical_authors', function (Blueprint $table) {
-            $table->string('author_name')->nullable();
+        Schema::table('settings', function (Blueprint $table) {
+            $table->text('data')->nullable();
+            $table->unsignedTinyInteger('type')->nullable();
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('book_artical_authors', function (Blueprint $table) {
-            $table->dropColumn('author_name');
+        Schema::table('settings', function (Blueprint $table) {
+            $table->dropColumn(['data', 'type']);
         });
     }
 };

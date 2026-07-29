@@ -125,7 +125,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'lockout'=>env('lockout',20),
-    'tries'=>env('lockout_tries',4),
+    'lockout' => env('lockout', 20),
+    'tries' => env('lockout_tries', 4),
 
 ];

@@ -63,132 +63,40 @@
         </div>
     </div>
     <div class="shadow mt-2 p-3 bg-white rounded">
-
         <div class="row">
             <div class="col-12">
-                <div class="shadow rounded p-3">
-                    <h5 style="display: flex;justify-content: space-between;align-items: center">
-                        <span>Individual Contact</span>
-
-                    </h5>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-2 ml-3"> <strong>Post</strong></div>
-                        <div class="col-md-3 ml-3"> <strong>Name</strong></div>
-                        <div class="col-md-3 ml-3"> <strong>Phone</strong></div>
-                        <div class="col-md-3 ml-3"> <strong>Email</strong></div>
-                        <div class="col-md-1">
-
-                        </div>
-                    </div>
-                    <form action="{{ route('admin.setting.contact.add') }}">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-2 mb-2">
-                                <input type="text" name="post" id="post" class="form-control">
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <input type="text" name="name" id="name" class="form-control" />
-                            </div>
-                            <div class="col-md-3 mb-2">
-
-                                <input type="text" name="phone" id="phone" class="form-control">
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <input type="text" name="email" id="email" class="form-control">
-                            </div>
-                            <div class="col-md-1 text-start">
-                                <button class="btn btn-success btn-sm">
-                                    Add
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <div id="individual_contacts">
-                        @foreach ($individualcontacts as $contact)
-                        <form action="{{route('admin.setting.contact.update')}}">
-                            @csrf
-                            <input type="hidden" name="id" value="{{$contact->id}}">
-                            <hr class="my-1">
-                            <div class="row" id="individual_contact_show_{{ $contact->id }}">
-                                <div class="col-md-2 mb-2">
-                                    <input type="text" name="post" id="post_{{ $contact->id }}"
-                                        value="{{ $contact->post }}" class="form-control">
-                                </div>
-                                <div class="col-md-3 mb-2">
-                                    <input type="text" name="name" id="name_{{ $contact->id }}"
-                                        class="form-control" value="{{ $contact->name }}">
-                                </div>
-                                <div class="col-md-3 mb-2">
-
-                                    <input type="text" name="phone" id="phone_{{ $contact->id }}"
-                                        class="form-control" value="{{ $contact->phone }}">
-                                </div>
-                                <div class="col-md-3 mb-2">
-                                    <input type="text" name="email" id="email_{{ $contact->id }}"
-                                        class="form-control" value="{{ $contact->email }}">
-                                </div>
-                                <div class="col-md-12 ">
-                                    <button class="btn btn-sm btn-primary">
-                                        Update
-                                    </button>
-                                    <span class="btn btn-sm btn-danger" onclick="delOld({{ $contact->id }})">
-                                        Del
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
-                        @endforeach
-                    </div>
-                </div>
-
+                <label for="contact_info" class="form-label"><strong>Contact Information Details</strong></label>
+                <textarea name="contact_info" id="contact_info" class="form-control note">{!! $contactSetting->data ?? '' !!}</textarea>
             </div>
         </div>
     </div>
-    @endsection
-    @section('js')
-        <script>
-            function saveAll() {
-                var cname = $('#cname').val();
-                var address = $('#address').val();
-                var phone = $('#phone').val();
-                var email = $('#email').val();
-                var po_box = $('#po_box').val();
-                var individualContactsDatas = [];
+@endsection
+@section('js')
+    <script>
+        function saveAll() {
+            var cname = $('#cname').val();
+            var address = $('#address').val();
+            var phone = $('#phone').val();
+            var email = $('#email').val();
+            var po_box = $('#po_box').val();
+            var contact_info = $('#contact_info').val();
 
-
-                const data = {
-                    cname: cname,
-                    address: address,
-                    phone: phone,
-                    email: email,
-                    po_box: po_box,
-                };
-
-                axios.post('{{ route('admin.setting.contact.index') }}', data)
-                    .then(res => {
-                        success('successfully Updated');
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    });
+            const data = {
+                cname: cname,
+                address: address,
+                phone: phone,
+                email: email,
+                po_box: po_box,
+                contact_info: contact_info,
             };
 
-            function delOld(id) {
-                axios.get("{{ route('admin.setting.contact.del', ['contact_id' => ':id']) }}".replace(':id', id))
-                    .then(res => {
-                        success('successfully deleted')
-                        $(`#individual_contact_show_${id}`).remove();
-                        $('#hr_old_' + id).remove();
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    })
-            }
-
-            function delNew(id) {
-                $(`#individual_contact_${id}`).remove();
-                $('#hr_new_' + id).remove();
-            }
-        </script>
-    @endsection
+            axios.post('{{ route('admin.setting.contact.index') }}', data)
+                .then(res => {
+                    success('successfully Updated');
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        };
+    </script>
+@endsection

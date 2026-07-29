@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
     use HasFactory;
+
+    public const TYPE_CONTACT = 1;
 }

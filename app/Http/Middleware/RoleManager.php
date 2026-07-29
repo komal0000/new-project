@@ -14,25 +14,26 @@ class RoleManager
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,$role): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        if(Auth::check()){
-            $user=Auth::user();
-            if($user->role!=$role){
-                if($user->role==0){
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role != $role) {
+                if ($user->role == 0) {
                     return redirect()->route('admin.index');
-                }elseif($user->role==1){
+                } elseif ($user->role == 1) {
                     return redirect()->route('client.index');
                 }
             }
-        }else{
+        } else {
             // dd($role);
-            if($role==0){
+            if ($role == 0) {
                 return redirect()->route('admin.login');
-            }elseif($role==1){
+            } elseif ($role == 1) {
                 return redirect()->route('front.login');
             }
         }
+
         return $next($request);
     }
 }

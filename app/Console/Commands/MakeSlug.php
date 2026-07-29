@@ -28,32 +28,32 @@ class MakeSlug extends Command
      */
     public function handle()
     {
-        $books=Book::all();
+        $books = Book::all();
         foreach ($books as $key => $book) {
-            $increment=1;
-            $original=str($book->title.",".$book->volume)->slug();
-            $slug=$original;
-            while(Book::where('id','<>',$book->id)->where('slug',$slug)->count()>0){
-                $slug=$original."-". $increment;
-                $increment+=1;
+            $increment = 1;
+            $original = str($book->title.','.$book->volume)->slug();
+            $slug = $original;
+            while (Book::where('id', '<>', $book->id)->where('slug', $slug)->count() > 0) {
+                $slug = $original.'-'.$increment;
+                $increment += 1;
             }
-            $book->slug=$slug;
+            $book->slug = $slug;
             $book->save();
         }
 
-        $articles=BookArtical::all();
+        $articles = BookArtical::all();
         foreach ($articles as $key => $article) {
-            $increment=1;
-            $original=str($article->title)->slug();
-            $slug=$original;
-            while(BookArtical::where('id','<>',$article->id)->where('slug',$slug)->count()>0){
-                $slug=$original."-". $increment;
-                $increment+=1;
+            $increment = 1;
+            $original = str($article->title)->slug();
+            $slug = $original;
+            while (BookArtical::where('id', '<>', $article->id)->where('slug', $slug)->count() > 0) {
+                $slug = $original.'-'.$increment;
+                $increment += 1;
             }
-            $article->slug=$slug;
+            $article->slug = $slug;
             $article->save();
         }
 
-      ( new BookController())->render();
+        (new BookController())->render();
     }
 }

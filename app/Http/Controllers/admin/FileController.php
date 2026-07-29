@@ -18,22 +18,23 @@ class FileController extends Controller
     //     return response()->file(storage_path('app/'.$filename), ['Content-Type' => $mimeType]);
     // }
 
-    public function index($id){
-        $file=DB::table('files')->where('id',$id)->first();
-        if($file==null){
+    public function index($id)
+    {
+        $file = DB::table('files')->where('id', $id)->first();
+        if ($file == null) {
             abort(404);
         }
-        $relativePath = 'submissions'. DIRECTORY_SEPARATOR . $file->path; // Path relative to the storage disk
+        $relativePath = 'submissions'.DIRECTORY_SEPARATOR.$file->path; // Path relative to the storage disk
         $fullPath = storage_path($relativePath);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             abort(404);
         }
 
         $mimeType = mime_content_type($fullPath);
 
         return response()->file($fullPath, [
-            'Content-Type' => $mimeType
+            'Content-Type' => $mimeType,
         ]);
     }
 }

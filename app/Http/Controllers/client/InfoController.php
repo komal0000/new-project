@@ -4,25 +4,24 @@ namespace App\Http\Controllers\client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class InfoController extends Controller
 {
-
-    public function password(Request $request){
-        if(isGet()){
+    public function password(Request $request)
+    {
+        if (isGet()) {
             return view('client.profile.password');
-        }else{
+        } else {
             $request->validate([
                 'current_password' => 'required',
                 'new_password' => 'required|min:8|confirmed',
             ]);
 
             // Check if the current password matches
-            if (!Hash::check($request->current_password, Auth::user()->password)) {
+            if (! Hash::check($request->current_password, Auth::user()->password)) {
                 return back()->withErrors(['current_password' => 'Current password is incorrect']);
             }
             $user = Auth::user();
@@ -34,13 +33,14 @@ class InfoController extends Controller
         }
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
         $user = Auth::user();
-        $client = Client::where('user_id',$user->id)->first();
-        if($request->getMethod()=="GET"){
-            return view('client.profile.index',compact('client','user'));
-        }else{
+        $client = Client::where('user_id', $user->id)->first();
+        if ($request->getMethod() == 'GET') {
+            return view('client.profile.index', compact('client', 'user'));
+        } else {
             $request->validate([
                 'password' => 'required|min:6',
                 'name' => 'required|string|max:255',
@@ -54,7 +54,7 @@ class InfoController extends Controller
             $client->affiliation = $request->affiliation;
             $client->save();
 
-            return redirect()->back()->with('success','successfully updated');
+            return redirect()->back()->with('success', 'successfully updated');
         }
     }
 }

@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class SubmissionController extends Controller
 {
     public function index()
     {
         $submissions = DB::table('submissions')
-            ->join('clients','clients.user_id','=','submissions.user_id')
-            ->join('files','files.id','=','submissions.file_id')
+            ->join('clients', 'clients.user_id', '=', 'submissions.user_id')
+            ->join('files', 'files.id', '=', 'submissions.file_id')
             ->select(
                 'submissions.id',
                 'submissions.user_id as uid',
@@ -29,31 +28,34 @@ class SubmissionController extends Controller
                 'files.path as p',
             )
             ->get();
-        return view('admin.submission.index',compact('submissions'));
+
+        return view('admin.submission.index', compact('submissions'));
     }
 
     public function list()
     {
     }
+
     public function add(Request $request)
     {
-        if ($request->getMethod() == "GET") {
+        if ($request->getMethod() == 'GET') {
             return view('admin.submission.add');
         } else {
             $submission = new Submission();
             // $submission->user_id = $request->user_id;
             $submission->title = $request->title;
             $submission->description = $request->description;
-            $submission->file = $request->file('file')->store('','sub');
+            $submission->file = $request->file('file')->store('', 'sub');
             $submission->status = $request->status;
             $submission->save();
         }
+
         return redirect()->back()->with('success', 'successfully added');
     }
 
     public function edit(Request $request)
     {
-        Submission::where('id', $request->id)->update(['status'=>$request->status]);
+        Submission::where('id', $request->id)->update(['status' => $request->status]);
     }
 
     // public function del($sub_id)

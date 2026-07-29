@@ -16,7 +16,6 @@ use App\Http\Controllers\client\InfoController as ClientInfoController;
 use App\Http\Controllers\client\SubmissionController as ClientSubmissionController;
 use App\Http\Controllers\DashbordController;
 use App\Http\Controllers\FrontController;
-use App\Http\Controllers\InfoController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,22 +23,21 @@ Route::get('/', [FrontController::class, 'index'])->name('index');
 Route::get('layout', [FrontController::class, 'layout'])->name('layout');
 Route::get('about', [FrontController::class, 'about'])->name('about');
 Route::get('policy', [FrontController::class, 'policy'])->name('policy');
-Route::match(['get','post'],'contact', [FrontController::class, 'contact'])->name('contact');
+Route::match(['get', 'post'], 'contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('guidelines', [FrontController::class, 'submission'])->name('submission');
 
-Route::get('archive',[FrontController::class,'archiveIssue'])->name('archive');
-Route::get('book/single/{book_id}',[FrontController::class,'bookSingle'])->name('book.single');
+Route::get('archive', [FrontController::class, 'archiveIssue'])->name('archive');
+Route::get('book/single/{book_id}', [FrontController::class, 'bookSingle'])->name('book.single');
 Route::get('articleSingle/{article}', [FrontController::class, 'articleSingle'])->name('articleSingle');
 
-Route::get('team',[FrontController::class,'team'])->name('team');
-Route::get('message/{slug}',[FrontController::class,'message'])->name('message');
-
+Route::get('team', [FrontController::class, 'team'])->name('team');
+Route::get('message/{slug}', [FrontController::class, 'message'])->name('message');
 
 //register login
 Route::match(['GET', 'POST'], 'register', [FrontController::class, 'register'])->name('register');
 Route::get('login', [FrontController::class, 'login'])->name('front.login');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('clientLogout',[LoginController::class,'clientLogout'])->name('clientLogout');
+Route::get('clientLogout', [LoginController::class, 'clientLogout'])->name('clientLogout');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::match(['get', 'post'], 'login', [LoginController::class, 'adminLogin'])->name('login');
@@ -58,11 +56,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('list', [AuthorController::class, 'list'])->name('list');
         });
 
-        Route::prefix('message')->name('message.')->group(function(){
-            Route::get('',[BoardMessageController::class,'index'])->name('index');
-            Route::match(['get','post'],'add',[BoardMessageController::class,'add'])->name('add');
-            Route::match(['get','post'],'edit/{id}',[BoardMessageController::class,'edit'])->name('edit');
-            Route::match(['get'],'del/{id}',[BoardMessageController::class,'del'])->name('del');
+        Route::prefix('message')->name('message.')->group(function () {
+            Route::get('', [BoardMessageController::class, 'index'])->name('index');
+            Route::match(['get', 'post'], 'add', [BoardMessageController::class, 'add'])->name('add');
+            Route::match(['get', 'post'], 'edit/{id}', [BoardMessageController::class, 'edit'])->name('edit');
+            Route::match(['get'], 'del/{id}', [BoardMessageController::class, 'del'])->name('del');
         });
 
         Route::prefix('book')->name('book.')->group(function () {
@@ -141,9 +139,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             });
             Route::prefix('contact')->name('contact.')->group(function () {
                 Route::match(['GET', 'POST'], 'index', [ContactController::class, 'index'])->name('index');
-                Route::match(['GET', 'POST'], 'add', [ContactController::class, 'add'])->name('add');
-                Route::match(['GET', 'POST'], 'update', [ContactController::class, 'update'])->name('update');
-                Route::get('del/{contact_id}', [ContactController::class, 'del'])->name('del');
             });
             Route::prefix('article_type')->name('artical_type.')->group(function () {
                 Route::get('indexArtical', [SettingController::class, 'indexArtical'])->name('indexArtical');
@@ -153,9 +148,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
             });
             Route::prefix('associate')->name('associate.')->group(function () {
                 Route::match(['GET', 'POST'], '', [SettingController::class, 'indexAsso'])->name('index');
-                Route::match(["POST"], 'add', [SettingController::class, 'addAsso'])->name('add');
-                Route::match(["POST"], 'edit', [SettingController::class, 'editAsso'])->name('edit');
-                Route::match(["GET"], 'del/{id}', [SettingController::class, 'delAsso'])->name('del');
+                Route::match(['POST'], 'add', [SettingController::class, 'addAsso'])->name('add');
+                Route::match(['POST'], 'edit', [SettingController::class, 'editAsso'])->name('edit');
+                Route::match(['GET'], 'del/{id}', [SettingController::class, 'delAsso'])->name('del');
             });
         });
     });
@@ -172,9 +167,9 @@ Route::prefix('client')->name('client.')->group(function () {
             Route::match(['GET', 'POST'], 'edit/{id}', [ClientSubmissionController::class, 'edit'])->name('edit');
             Route::match(['GET'], 'del/{id}', [ClientSubmissionController::class, 'del'])->name('del');
         });
-        Route::prefix('info')->name('info.')->group(function(){
-            Route::match(['GET','POST'],'index',[ClientInfoController::class,'index'])->name('index');
-            Route::match(['GET','POST'],'change-password',[ClientInfoController::class,'password'])->name('password');
+        Route::prefix('info')->name('info.')->group(function () {
+            Route::match(['GET', 'POST'], 'index', [ClientInfoController::class, 'index'])->name('index');
+            Route::match(['GET', 'POST'], 'change-password', [ClientInfoController::class, 'password'])->name('password');
         });
 
     });
