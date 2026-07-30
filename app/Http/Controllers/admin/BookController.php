@@ -19,7 +19,7 @@ class BookController extends Controller
 
     public function list()
     {
-        $books = DB::table(t_books)->get(['id', 'title', 'volume', 'issue', 'issue_name', 'published_date', 'iscurrent']);
+        $books = DB::table(t_books)->orderBy('issue', 'desc')->get(['id', 'title', 'volume', 'issue', 'issue_name', 'published_date', 'iscurrent']);
 
         return response()->json($books);
     }
@@ -144,14 +144,14 @@ class BookController extends Controller
     public function render()
     {
 
-        $books = DB::table('books')->get();
+        $books = DB::table('books')->orderBy('issue', 'desc')->get();
         $bookArticles = DB::table('book_articals')->orderBy('en_page_no')->get();
         $authors = DB::table('authors')->get();
         $bookArticlesAuthors = DB::table('book_artical_authors')->orderBy('id')->get();
         $types = DB::table('artical_types')->get();
 
         file_put_contents(resource_path('views/front/cache/archive.blade.php'), view('admin.templete.archive.index', [
-            'books' => $books->where('iscurrent', 0)->values(), 'bookArticles' => $bookArticles,
+            'books' => $books->where('iscurrent', 0)->sortByDesc('issue')->values(), 'bookArticles' => $bookArticles,
         ])->render());
 
         foreach ($books as $key => $book) {

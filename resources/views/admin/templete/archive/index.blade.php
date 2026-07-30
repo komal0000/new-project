@@ -1,8 +1,11 @@
-@if ($books->count() > 0)
+@php
+    $sortedBooks = $books->sortByDesc('issue')->values();
+@endphp
+@if ($sortedBooks->count() > 0)
     @php
-        $len=$books->count()-1;
+        $len = $sortedBooks->count() - 1;
     @endphp
-    @foreach ($books as $key=>$book)
+    @foreach ($sortedBooks as $key => $book)
     <div class="archive">
         <div class="row">
             <div class="col-md-2">
