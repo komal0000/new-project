@@ -128,4 +128,6 @@ return [
     'lockout' => env('lockout', 20),
     'tries' => env('lockout_tries', 4),
 
+    'APP_VER' => env('APP_VER', '1.0.0'),
+
 ];
