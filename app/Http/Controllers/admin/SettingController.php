@@ -9,6 +9,7 @@ use App\Models\Associate;
 use App\Models\Associatetitle;
 use App\Models\Generallayout;
 use App\Models\Policies;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -243,5 +244,31 @@ class SettingController extends Controller
 
         return redirect()->back()->with('success', 'successfully deleted');
 
+    }
+
+    public function editorialPolicy_index(Request $request)
+    {
+        $editorialPolicy = Setting::where('type', Setting::TYPE_EDITORIAL_PUBLISHING_POLICY)->first();
+
+        if ($request->isMethod('GET')) {
+            return view('admin.setting.editorial_policy.index', compact('editorialPolicy'));
+        } else {
+            if ($editorialPolicy == null) {
+                $editorialPolicy = new Setting();
+                $editorialPolicy->type = Setting::TYPE_EDITORIAL_PUBLISHING_POLICY;
+            }
+            $editorialPolicy->data = $request->input('editorial_policy_info');
+            $editorialPolicy->save();
+
+            self::editorialPolicyRender();
+
+            return redirect()->back()->with('success', 'Successfully Updated');
+        }
+    }
+
+    public static function editorialPolicyRender()
+    {
+        $editorialPolicy = Setting::where('type', Setting::TYPE_EDITORIAL_PUBLISHING_POLICY)->first();
+        file_put_contents(resource_path('views/front/cache/editorial_publishing_policy.blade.php'), view('admin.templete.editorial_publishing_policy', compact('editorialPolicy'))->render());
     }
 }

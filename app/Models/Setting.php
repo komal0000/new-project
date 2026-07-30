@@ -10,4 +10,6 @@ class Setting extends Model
     use HasFactory;
 
     public const TYPE_CONTACT = 1;
+
+    public const TYPE_EDITORIAL_PUBLISHING_POLICY = 2;
 }

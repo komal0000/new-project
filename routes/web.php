@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontController::class, 'index'])->name('index');
 Route::get('layout', [FrontController::class, 'layout'])->name('layout');
 Route::get('about', [FrontController::class, 'about'])->name('about');
+Route::get('editorial-publishing-policy', [FrontController::class, 'editorialPublishingPolicy'])->name('editorial_publishing_policy');
 Route::get('policy', [FrontController::class, 'policy'])->name('policy');
 Route::match(['get', 'post'], 'contact', [FrontController::class, 'contact'])->name('contact');
 Route::get('guidelines', [FrontController::class, 'submission'])->name('submission');
@@ -124,6 +125,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             Route::prefix('generalLayout')->name('generalLayout.')->group(function () {
                 Route::match(['GET', 'POST'], 'general_index', [SettingController::class, 'general_index'])->name('general_index');
+            });
+            Route::prefix('editorialPolicy')->name('editorialPolicy.')->group(function () {
+                Route::match(['GET', 'POST'], 'index', [SettingController::class, 'editorialPolicy_index'])->name('index');
             });
             Route::prefix('policy')->name('policy.')->group(function () {
                 Route::get('policy_index', [SettingController::class, 'policy_index'])->name('policy_index');

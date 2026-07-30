@@ -107,4 +107,9 @@ class FrontController extends Controller
         return view('front.message.index', compact('filename'));
 
     }
+
+    public function editorialPublishingPolicy()
+    {
+        return view('front.editorial_publishing_policy.index');
+    }
 }

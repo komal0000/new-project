@@ -72,6 +72,9 @@
                             <a class="nav-link" href="{{ route('about') }}" id="item_a">ABOUT
                                 US</a>
                         </li>
+                        <li class="nav-item" id="item">
+                            <a class="nav-link" href="{{ route('editorial_publishing_policy') }}" id="item_a">EDITORIAL &amp; PUBLISHING POLICIES</a>
+                        </li>
                         {{-- <li class="nav-item" id="item">
                             <a class="nav-link" href="{{ route('policy') }}"
                                 id="item_a">
