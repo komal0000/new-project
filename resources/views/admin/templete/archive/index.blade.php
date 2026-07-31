@@ -14,7 +14,7 @@
             <div class="col-md-9">
                 <a href="{{ route('book.single', ['book_id' => $book->slug??$book->id]) }}">
                     <div class="name">
-                        {{ $book->title }}, {{ $book->volume }}
+                        {{ $book->title }} {{ $book->volume }}
                     </div>
                     <div class="date">
                         Issued {{ $book->issue }}

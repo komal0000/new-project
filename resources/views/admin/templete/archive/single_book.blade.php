@@ -11,7 +11,7 @@
             <div class="col-md-9">
                 <div class="banner">
                     <h1 style="color: var(--text)">
-                        {{ $book->title }}, {{$book->volume}}
+                        {{ $book->title }} {{$book->volume}}
                     </h1>
                     <div class="description">
                         {{ $book->s_description }}
